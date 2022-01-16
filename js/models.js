@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; //force the context to be undefined
 
 const BASE_URL = 'https://hack-or-snooze-v3.herokuapp.com';
 
@@ -23,7 +23,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
+    new URL(this.url).hostname;
     return 'hostname.com';
   }
 }
@@ -71,8 +71,19 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory(/* user, newStory */) {
+  async addStory(user, { title, author, url }) {
     // UNIMPLEMENTED: complete this function!
+    const token = user.loginToken;
+    const res = await axios({
+      method: 'POST',
+      url: 'https://hack-or-snooze-v3.herokuapp.com/stories',
+      data: { token, story: { title, author, url } }
+    });
+    const story = new Story(res.data.story);
+    this.stories.unshift(story); //adds to beginning of array
+    user.ownStories.unshift(story);
+
+    return story;
   }
 }
 
