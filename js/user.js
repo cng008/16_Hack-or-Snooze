@@ -71,7 +71,6 @@ $navLogOut.on('click', logout);
 /** If there are user credentials in local storage, use those to log in
  * that user. This is meant to be called on page load, just once.
  */
-
 async function checkForRememberedUser() {
   console.debug('checkForRememberedUser');
   const token = localStorage.getItem('token');
@@ -87,7 +86,6 @@ async function checkForRememberedUser() {
  * We store the username/token in localStorage so when the page is refreshed
  * (or the user revisits the site later), they will still be logged in.
  */
-
 function saveUserCredentialsInLocalStorage() {
   console.debug('saveUserCredentialsInLocalStorage');
   if (currentUser) {
@@ -97,7 +95,7 @@ function saveUserCredentialsInLocalStorage() {
 }
 
 /******************************************************************************
- * General UI stuff about users
+ * General UI stuff about users & profiles
  */
 
 /** When a user signs up or registers, we want to set up the UI for them:
@@ -106,11 +104,24 @@ function saveUserCredentialsInLocalStorage() {
  * - update nav bar options for logged-in user
  * - generate the user profile part of the page
  */
-
-function updateUIOnUserLogin() {
+async function updateUIOnUserLogin() {
   console.debug('updateUIOnUserLogin');
 
+  hidePageComponents();
+
+  // re-display stories (so that "favorite" stars can appear)
+  putStoriesOnPage();
   $allStoriesList.show();
 
   updateNavOnLogin();
+  generateUserProfile();
+}
+
+/** Show a "user profile" part of page built from the current user's info. */
+function generateUserProfile() {
+  console.debug('generateUserProfile');
+
+  $('#profile-name').text(currentUser.name);
+  $('#profile-username').text(currentUser.username);
+  $('#profile-account-date').text(currentUser.createdAt.slice(0, 10));
 }
