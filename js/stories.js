@@ -75,6 +75,21 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+/** Handle deleting a story. */
+
+async function deleteStory(evt) {
+  console.debug('deleteStory');
+
+  const $closestLi = $(evt.target).closest('li');
+  const storyId = $closestLi.attr('id');
+
+  await storyList.removeStory(currentUser, storyId);
+
+  // re-generate story list
+  await putUserStoriesOnPage();
+}
+$ownStories.on('click', '.trash-can', deleteStory);
+
 /** Handle submitting new story form. */
 async function submitNewStory(evt) {
   console.debug('submitNewStory');
@@ -97,6 +112,26 @@ async function submitNewStory(evt) {
   $submitForm.trigger('reset');
 }
 $submitForm.on('submit', submitNewStory);
+
+/******************************************************************************
+ * Functionality for list of user's own stories
+ */
+function putUserStoriesOnPage() {
+  console.debug('putUserStoriesOnPage');
+
+  $ownStories.empty();
+
+  if (currentUser.ownStories.length === 0) {
+    $ownStories.append("<p>You haven't added any stories yet!</p>");
+  } else {
+    // loop through all of users stories and generate HTML for them
+    for (let story of currentUser.ownStories) {
+      let $story = generateStoryMarkup(story, true);
+      $ownStories.append($story);
+    }
+  }
+  $ownStories.show();
+}
 
 /******************************************************************************
  * Functionality for favorites list and starr/un-starr a story

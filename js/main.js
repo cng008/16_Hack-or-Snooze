@@ -10,6 +10,7 @@ const $allStoriesList = $('#all-stories-list');
 const $submitForm = $('#add-story-form');
 const $favoritesList = $('#fav-stories');
 const $navStoryForm = $('#nav-submit-story');
+const $ownStories = $('#my-stories');
 
 const $loginForm = $('#login-form');
 const $signupForm = $('#signup-form');
@@ -28,6 +29,7 @@ function hidePageComponents() {
     $allStoriesList,
     $submitForm,
     $favoritesList,
+    $ownStories,
     $loginForm,
     $signupForm
   ];

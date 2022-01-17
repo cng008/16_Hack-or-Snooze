@@ -46,3 +46,12 @@ function navFavoritesClick(evt) {
   putFavoritesListOnPage();
 }
 $body.on('click', '#nav-favorites', navFavoritesClick);
+
+/** Show My Stories on click "my stories" */
+function navMyStories(evt) {
+  console.debug('navMyStories', evt);
+  hidePageComponents();
+  putUserStoriesOnPage();
+  $ownStories.show();
+}
+$body.on('click', '#nav-my-stories', navMyStories);
