@@ -176,4 +176,4 @@ async function toggleStoryFavorite(evt) {
     $tgt.closest('i').toggleClass('fas far');
   }
 }
-$allStoriesList.on('click', '.star', toggleStoryFavorite);
+$body.on('click', '.star', toggleStoryFavorite);
